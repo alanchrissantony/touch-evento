@@ -3,7 +3,7 @@ import video1 from "./assets/img/video1.mp4";
 import image2 from "./assets/img/image22.png";
 import image3 from "./assets/img/image444.png";
 import image4 from "./assets/img/image444.png";
-import bgImage from "./assets/img/bg-image.png";
+import bgImage from "./assets/img/bg-image1.png";
 import useMediaQuery from "./components/hooks/useMediaQuery";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,7 +23,7 @@ import {
 // Utility function to determine proper contrast color based on brightness
 const getContrastColor = (rgbColor) => {
   if (!rgbColor) return "#ffffff";
-  const [r, g, b] = rgbColor.replace(/rgb\(|\)/g, "").split(",").map(Number);
+  const [r, g, b] = rgbColor.replace(/rgb\(|\)/g, '').split(',').map(Number);
   const brightness = (r * 299 + g * 587 + b * 114) / 1000;
   return brightness > 128 ? "#333333" : "#ffffff";
 };
@@ -83,19 +83,19 @@ function App() {
 
   return (
     <main
-      className="min-h-screen flex justify-center items-center bg-cover bg-center p-4"
+      className="h-[90vh] lg:h-screen flex justify-center items-center bg-cover bg-center p-4"
       style={isDesktop ? { backgroundImage: `url(${bgImage})` } : {}}
     >
       <section className="w-full max-w-lg bg-white bg-opacity-90 rounded-xl shadow-xl overflow-hidden">
         <div className="flex flex-col">
-          <TabBar 
-            tabs={tabs} 
-            activeTab={activeTab} 
-            onTabChange={handleTabChange} 
-            themeColor={themeColor} 
+          <TabBar
+            tabs={tabs}
+            activeTab={activeTab}
+            onTabChange={handleTabChange}
+            themeColor={themeColor}
             currentIndex={currentIndex}
           />
-          <ContentContainer 
+          <ContentContainer
             activeTab={activeTab}
             contentMedia={contentMedia}
             animationDirection={animationDirection}
@@ -126,11 +126,17 @@ const TabBar = ({ tabs, activeTab, onTabChange, themeColor, currentIndex }) => (
 );
 
 const TabButton = ({ title, isActive, onClick, themeColor }) => {
-  const buttonStyle = {
-    backgroundColor: isActive ? themeColor : `${getContrastColor(themeColor)}20`,
-    color: isActive ? getContrastColor(themeColor) : `${getContrastColor(themeColor)}b3`,
-    borderColor: isActive ? `${themeColor}80` : `${themeColor}33`
+  const adjustOpacity = (rgbColor, opacity) => {
+    if (!rgbColor) return "rgba(0,0,0,0.1)";
+    return rgbColor.replace('rgb(', 'rgba(').replace(')', `, ${opacity})`);
   };
+  const buttonStyle = {
+    backgroundColor: isActive ? themeColor : `${adjustOpacity(themeColor, 0.2)}`,
+    color: isActive ? getContrastColor(themeColor) : `${getContrastColor(themeColor)}b3`,
+    borderColor: isActive ? `${adjustOpacity(themeColor, 0.5)}` : `${adjustOpacity(themeColor, 0.2)}`
+  };
+
+
 
   return (
     <button
@@ -216,36 +222,36 @@ const ContentImage = ({ contentMedia }) => (
 // -------------------- Information Page Component --------------------
 const InformationPage = ({ themeColor }) => (
   <div
-    className="p-6 bg-cover bg-center h-full overflow-y-auto"
+    className="p-6 bg-cover bg-center h-full overflow-y-auto scrollbar-hide"
     style={{ backgroundImage: `url(${image4})` }}
   >
     <div className="bg-white bg-opacity-90 rounded-md shadow-lg p-6">
-      <h1 
-        className="text-3xl font-bold text-center mb-6" 
+      <h1
+        className="text-xl md:text-3xl font-bold text-center mb-6"
         style={{ color: themeColor, textShadow: "0px 1px 2px rgba(0,0,0,0.1)" }}
       >
         Event Information
       </h1>
-      
-      <EventCard 
-        title="Ceremony" 
+
+      <EventCard
+        title="Ceremony"
         date="May 01, 2025, 11:15 AM – 12:00 PM"
         location="Madayi Cooperative Rural Bank Auditorium, Ezhome, Pazhayangadi"
         mapUrl="https://www.google.com/maps/search/Madayi+Cooperative+Rural+Bank+Auditorium"
         themeColor={themeColor}
       />
-      
-      <EventCard 
-        title="Reception" 
+
+      <EventCard
+        title="Reception"
         date="May 02, 2025, 5:00 PM – 9:00 PM"
         location="Marmara Beach House, Payyambalam"
         mapUrl="https://www.google.com/maps/search/Marmara+Beach+House"
         themeColor={themeColor}
       />
-      
+
       <section className="mt-8">
-        <h2 
-          className="text-2xl font-bold text-center mb-6"
+        <h2
+          className="text-base md:text-2xl font-bold text-center mb-6"
           style={{ color: themeColor, textShadow: "0px 1px 2px rgba(0,0,0,0.1)" }}
         >
           Travel &amp; Stay
@@ -258,31 +264,31 @@ const InformationPage = ({ themeColor }) => (
 
 // -------------------- Event Card Component --------------------
 const EventCard = ({ title, date, location, mapUrl, themeColor }) => (
-  <section 
-    className="mb-6 p-4 rounded-lg transition-all duration-300 hover:shadow-md" 
+  <section
+    className="mb-6 p-4 rounded-lg transition-all duration-300 hover:shadow-md"
     style={{ backgroundColor: `${themeColor}15`, borderLeft: `4px solid ${themeColor}` }}
   >
-    <h2 className="text-2xl font-semibold mb-3">
+    <h2 className="text-base md:text-2xl font-semibold mb-3">
       <IconText icon={Event} text={title} size="24px" />
     </h2>
-    
+
     <div className="ml-2 space-y-3">
       <p className="flex items-start">
         <DateRange style={{ marginRight: 8, color: themeColor }} />
         <span>{date}</span>
       </p>
-      
+
       <p className="flex items-start">
         <LocationOn style={{ marginRight: 8, color: themeColor }} />
         <span>{location}</span>
       </p>
-      
+
       <a
         href={mapUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center mt-2 p-2 rounded-md transition-all hover:bg-opacity-80"
-        style={{ 
+        style={{
           backgroundColor: `${themeColor}30`,
           color: themeColor,
           border: `1px solid ${themeColor}50`
@@ -333,21 +339,21 @@ const TransportationInfo = ({ themeColor }) => {
   ];
 
   return (
-    <div 
+    <div
       className="p-4 rounded-lg"
       style={{ backgroundColor: `${themeColor}10`, borderLeft: `4px solid ${themeColor}` }}
     >
-      <h3 
-        className="text-xl font-bold mb-4"
+      <h3
+        className="text-sm md:text-xl font-bold mb-4"
         style={{ color: themeColor }}
       >
         <IconText icon={DirectionsBus} text="Transportation" size="22px" />
       </h3>
-      
+
       <div className="space-y-3">
         {enhancedTransportData.map((item, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             className="flex flex-col p-2 rounded-md hover:bg-white hover:bg-opacity-50 transition-all"
           >
             <div className="flex items-center justify-between">
@@ -398,17 +404,17 @@ const AccommodationInfo = ({ themeColor }) => {
   ];
 
   return (
-    <div 
+    <div
       className="p-4 rounded-lg"
       style={{ backgroundColor: `${themeColor}10`, borderLeft: `4px solid ${themeColor}` }}
     >
-      <h3 
-        className="text-xl font-bold mb-4"
+      <h3
+        className="text-sm md:text-xl font-bold mb-4"
         style={{ color: themeColor }}
       >
         <IconText icon={Hotel} text="Accommodations" size="22px" />
       </h3>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {enhancedAccommodationData.map((item, index) => (
           <a
@@ -417,7 +423,7 @@ const AccommodationInfo = ({ themeColor }) => {
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 rounded-md hover:shadow-md transition-all flex flex-col"
-            style={{ 
+            style={{
               backgroundColor: `${themeColor}20`,
               borderBottom: `2px solid ${themeColor}`
             }}
@@ -484,7 +490,7 @@ const RSVPForm = ({ themeColor = "#fedada" }) => {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md bg-white bg-opacity-95 rounded-xl p-6 shadow-xl"
+        className="w-full max-w-md bg-transparent bg-opacity-20 backdrop-blur-md rounded-xl p-6 shadow-xl"
       >
         {submitted ? (
           <SuccessMessage
@@ -494,8 +500,8 @@ const RSVPForm = ({ themeColor = "#fedada" }) => {
           />
         ) : (
           <form onSubmit={handleRSVPSubmit}>
-            <h2 className="text-2xl font-bold text-center mb-4" style={{ color: themeColor }}>
-              RSVP
+            <h2 className="text-2xl font-bold text-center mb-4" style={{ color: themeColor, fontFamily: 'Dancing Script, cursive' }}>
+              We are so happy to have you
             </h2>
             <div className="flex flex-col gap-4">
               <FormInput
@@ -518,6 +524,7 @@ const RSVPForm = ({ themeColor = "#fedada" }) => {
               {formError && <ErrorMessage message={formError} themeColor={themeColor} />}
               <SubmitButton themeColor={themeColor} isSubmitting={isSubmitting} />
             </div>
+            <ContactIcon/>
           </form>
         )}
       </motion.div>
@@ -525,22 +532,34 @@ const RSVPForm = ({ themeColor = "#fedada" }) => {
   );
 };
 
-const FormInput = ({ name, value, onChange, placeholder, themeColor, type = "text", icon }) => (
-  <div className="relative">
-    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-      {React.cloneElement(icon, { style: { color: themeColor }, fontSize: "small" })}
+const FormInput = ({ name, value, onChange, placeholder, themeColor, type = "text", icon }) => {
+  const adjustOpacity = (rgbColor, opacity) => {
+    if (!rgbColor) return "rgba(0,0,0,0.1)";
+    return rgbColor.replace('rgb(', 'rgba(').replace(')', `, ${opacity})`);
+  };
+  return (
+    <div className="relative">
+      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+        {React.cloneElement(icon, { style: { color: themeColor }, fontSize: "small" })}
+      </div>
+      <input
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="w-full px-10 py-3 rounded-lg border-1 focus:outline-none focus:ring-1 bg-transparent"
+        style={{
+          borderColor: adjustOpacity(themeColor),
+          focusRingColor: themeColor,
+          color: adjustOpacity(themeColor),
+          placeholderColor: adjustOpacity(themeColor)
+        }}
+      />
     </div>
-    <input
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className="w-full px-4 py-3 pl-10 rounded-lg border focus:outline-none focus:ring-2 bg-white bg-opacity-90"
-      style={{ borderColor: themeColor, color: "#333", transition: "all 0.3s ease" }}
-    />
-  </div>
-);
+  )
+}
+
 
 const ErrorMessage = ({ message, themeColor }) => (
   <motion.p
@@ -605,5 +624,11 @@ const SuccessMessage = ({ name, themeColor, resetForm }) => (
     </button>
   </motion.div>
 );
+
+const ContactIcon = ()=>{
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" ><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+  )
+}
 
 export default App;

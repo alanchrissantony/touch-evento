@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+
+@layer utilities {
+    /* Chrome, Safari and Opera */
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scrollbar-hide {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+}
+
+@font-face {
+    font-family: 'Dancing Script';
+    src: url('./assets/fonts/Dancing_Script/DancingScript-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900; 
+    font-style: normal;
+    font-display: swap;
+  }
