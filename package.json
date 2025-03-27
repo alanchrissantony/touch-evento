@@ -21,6 +21,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-swipeable": "^7.0.2",
+    "tailwind-scrollbar-hide": "^2.0.0",
     "tailwindcss": "^4.0.12"
   },
   "devDependencies": {

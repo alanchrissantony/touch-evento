@@ -1,9 +1,9 @@
 import "./App.css";
 import video1 from "./assets/img/video1.mp4";
-import image2 from "./assets/img/image22.png";
-import image3 from "./assets/img/image444.png";
-import image4 from "./assets/img/image444.png";
-import bgImage from "./assets/img/bg-image1.png";
+import image2 from "./assets/img/image.webp";
+import image3 from "./assets/img/rsvp_bg.webp";
+import image4 from "./assets/img/rsvp_bg.webp";
+import bgImage from "./assets/img/bg-image.webp";
 import useMediaQuery from "./components/hooks/useMediaQuery";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -150,6 +150,8 @@ const TabButton = ({ title, isActive, onClick, themeColor }) => {
 };
 
 // -------------------- Content & Animation Components --------------------
+
+
 const ContentContainer = ({
   activeTab,
   contentMedia,
@@ -159,7 +161,6 @@ const ContentContainer = ({
   tabs,
   onTabChange
 }) => {
-  // Swipe threshold in pixels; adjust as needed.
   const swipeThreshold = 100;
 
   return (
@@ -181,7 +182,7 @@ const ContentContainer = ({
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: animationDirection ? "-100%" : "100%", opacity: 0.7 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
-          className="absolute w-full h-full flex justify-center items-center"
+          className="absolute w-full h-full overflow-y-auto"
         >
           {activeTab === "Invitation" && <VideoPlayer contentMedia={contentMedia} />}
           {activeTab === "Schedule" && <ContentImage contentMedia={contentMedia} />}
@@ -192,7 +193,6 @@ const ContentContainer = ({
     </div>
   );
 };
-
 const VideoPlayer = ({ contentMedia }) => (
   <video
     autoPlay
@@ -322,7 +322,7 @@ const TransportationInfo = ({ themeColor }) => {
     },
     {
       name: "Payyanur Railway Station (PAY)",
-      distance: "8km, 15min",
+      distance: "15km, 25min",
       mapUrl: "https://www.google.com/maps/search/Payyanur+Railway+Station",
       destination: "Wedding Venue"
     },
