@@ -1,5 +1,5 @@
 import "./App.css";
-import video1 from "./assets/img/video1.mp4";
+import video1 from "./assets/img/video.mp4";
 import image2 from "./assets/img/image.webp";
 import image3 from "./assets/img/rsvp_bg.webp";
 import image4 from "./assets/img/rsvp_bg.webp";
