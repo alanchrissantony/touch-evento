@@ -1,9 +1,9 @@
 import "./App.css";
 import video1 from "./assets/img/video1.mp4";
-import image2 from "./assets/img/image22.png";
-import image3 from "./assets/img/image444.png";
-import image4 from "./assets/img/image444.png";
-import bgImage from "./assets/img/bg-image1.png";
+import image2 from "./assets/img/image.webp";
+import image3 from "./assets/img/rsvp_bg.webp";
+import image4 from "./assets/img/rsvp_bg.webp";
+import bgImage from "./assets/img/bg-image.webp";
 import useMediaQuery from "./components/hooks/useMediaQuery";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -150,6 +150,8 @@ const TabButton = ({ title, isActive, onClick, themeColor }) => {
 };
 
 // -------------------- Content & Animation Components --------------------
+
+
 const ContentContainer = ({
   activeTab,
   contentMedia,
@@ -159,7 +161,6 @@ const ContentContainer = ({
   tabs,
   onTabChange
 }) => {
-  // Swipe threshold in pixels; adjust as needed.
   const swipeThreshold = 100;
 
   return (
@@ -167,7 +168,7 @@ const ContentContainer = ({
       <AnimatePresence mode="popLayout" initial={false} custom={animationDirection}>
         <motion.div
           key={currentIndex}
-          custom={animationDirection}
+          custom={!animationDirection}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           onDragEnd={(e, info) => {
@@ -180,8 +181,8 @@ const ContentContainer = ({
           initial={{ x: animationDirection ? "100%" : "-100%", opacity: 0.7 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: animationDirection ? "-100%" : "100%", opacity: 0.7 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="absolute w-full h-full flex justify-center items-center"
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className="absolute w-full h-full overflow-y-auto"
         >
           {activeTab === "Invitation" && <VideoPlayer contentMedia={contentMedia} />}
           {activeTab === "Schedule" && <ContentImage contentMedia={contentMedia} />}
@@ -192,7 +193,6 @@ const ContentContainer = ({
     </div>
   );
 };
-
 const VideoPlayer = ({ contentMedia }) => (
   <video
     autoPlay
@@ -214,10 +214,6 @@ const ContentImage = ({ contentMedia }) => (
     animate={{ opacity: 1 }}
   />
 );
-
-// -------------------- Information Page Component --------------------
-// -------------------- Information Page Component --------------------
-
 
 // -------------------- Information Page Component --------------------
 const InformationPage = ({ themeColor }) => (
@@ -272,7 +268,7 @@ const EventCard = ({ title, date, location, mapUrl, themeColor }) => (
       <IconText icon={Event} text={title} size="24px" />
     </h2>
 
-    <div className="ml-2 space-y-3">
+    <div className="ml-2 space-y-3 text-base">
       <p className="flex items-start">
         <DateRange style={{ marginRight: 8, color: themeColor }} />
         <span>{date}</span>
@@ -287,11 +283,12 @@ const EventCard = ({ title, date, location, mapUrl, themeColor }) => (
         href={mapUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center mt-2 p-2 rounded-md transition-all hover:bg-opacity-80"
+        className="inline-flex items-center mt-2 p-2 rounded-md transition-all duration-300 hover:shadow-lg hover:bg-opacity-90"
         style={{
           backgroundColor: `${themeColor}30`,
           color: themeColor,
-          border: `1px solid ${themeColor}50`
+          border: `2px solid ${themeColor}`,
+          textShadow: "0px 1px 2px rgba(0,0,0,0.15)"
         }}
       >
         <Map style={{ marginRight: 8 }} />
@@ -310,29 +307,28 @@ const TravelGuide = ({ themeColor }) => (
 );
 
 const TransportationInfo = ({ themeColor }) => {
-  // Enhanced transportation data with hyperlinks and icons
   const enhancedTransportData = [
     {
       name: "Kannur International Airport (CNN)",
-      distance: "15km, 25min",
+      distance: "28km, 50min",
       mapUrl: "https://www.google.com/maps/search/Kannur+International+Airport",
-      destination: "Wedding Venue/Reception Venue"
+      destination: "Reception Venue"
     },
     {
       name: "Kozhikode International Airport (CCJ)",
-      distance: "85km, 2hr",
+      distance: "120km, 3hr",
       mapUrl: "https://www.google.com/maps/search/Kozhikode+International+Airport",
-      destination: "Wedding Venue/Reception Venue"
+      destination: "Reception Venue"
     },
     {
       name: "Payyanur Railway Station (PAY)",
-      distance: "8km, 15min",
+      distance: "15km, 25min",
       mapUrl: "https://www.google.com/maps/search/Payyanur+Railway+Station",
       destination: "Wedding Venue"
     },
     {
       name: "Kannur Railway Station",
-      distance: "6km, 12min",
+      distance: "3.5km, 12min",
       mapUrl: "https://www.google.com/maps/search/Kannur+Railway+Station",
       destination: "Reception Venue"
     }
@@ -350,18 +346,18 @@ const TransportationInfo = ({ themeColor }) => {
         <IconText icon={DirectionsBus} text="Transportation" size="22px" />
       </h3>
 
-      <div className="space-y-3">
+      <div className="space-y-3 text-base">
         {enhancedTransportData.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col p-2 rounded-md hover:bg-white hover:bg-opacity-50 transition-all"
+            className="flex flex-col p-2 rounded-md transition-all duration-300 hover:bg-white hover:bg-opacity-50"
           >
             <div className="flex items-center justify-between">
               <a
                 href={item.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium hover:underline"
+                className="font-medium hover:underline transition-all duration-300"
                 style={{ color: themeColor }}
               >
                 {item.name}
@@ -370,7 +366,9 @@ const TransportationInfo = ({ themeColor }) => {
                 {item.distance}
               </span>
             </div>
-            <span className="text-sm text-gray-600 ml-2 mt-1">To: {item.destination}</span>
+            <span className="text-sm text-gray-600 ml-2 mt-1">
+              To: {item.destination}
+            </span>
           </div>
         ))}
       </div>
@@ -379,7 +377,6 @@ const TransportationInfo = ({ themeColor }) => {
 };
 
 const AccommodationInfo = ({ themeColor }) => {
-  // Enhanced accommodation data with hyperlinks and additional info
   const enhancedAccommodationData = [
     {
       name: "Marmara Beach House",
@@ -415,17 +412,19 @@ const AccommodationInfo = ({ themeColor }) => {
         <IconText icon={Hotel} text="Accommodations" size="22px" />
       </h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-base">
         {enhancedAccommodationData.map((item, index) => (
           <a
             key={index}
             href={item.mapUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 rounded-md hover:shadow-md transition-all flex flex-col"
+            className="p-3 rounded-md transition-all duration-300 hover:shadow-lg flex flex-col"
             style={{
               backgroundColor: `${themeColor}20`,
-              borderBottom: `2px solid ${themeColor}`
+              borderBottom: `2px solid ${themeColor}`,
+              color: themeColor,
+              textDecoration: "none"
             }}
           >
             <span className="font-medium" style={{ color: themeColor }}>
