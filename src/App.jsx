@@ -17,7 +17,13 @@ import {
   LocationOn,
   Map,
   DirectionsBus,
-  Hotel
+  Hotel,
+  Flight,
+  DirectionsRailway,
+  LocalActivity,
+  Restaurant,
+  Train,
+  FlightTakeoff,
 } from "@mui/icons-material";
 
 // Utility function to determine proper contrast color based on brightness
@@ -306,69 +312,125 @@ const TravelGuide = ({ themeColor }) => (
   </div>
 );
 
+
 const TransportationInfo = ({ themeColor }) => {
   const enhancedTransportData = [
     {
       name: "Kannur International Airport (CNN)",
-      distance: "28km, 50min",
-      mapUrl: "https://www.google.com/maps/search/Kannur+International+Airport",
-      destination: "Reception Venue"
+      destinations: [
+        {
+          place: "Wedding Venue",
+          distance: "47km, 1hr", // Estimated - verify actual distance
+          mapUrl: "https://www.google.com/maps/dir/Kannur+International+Airport/Wedding+Venue"
+        },
+        {
+          place: "Reception Venue",
+          distance: "28km, 40min",
+          mapUrl: "https://www.google.com/maps/dir/Kannur+International+Airport/Reception+Venue"
+        }
+      ]
     },
     {
       name: "Kozhikode International Airport (CCJ)",
-      distance: "120km, 3hr",
-      mapUrl: "https://www.google.com/maps/search/Kozhikode+International+Airport",
-      destination: "Reception Venue"
+      destinations: [
+        {
+          place: "Wedding Venue",
+          distance: "140km, 4hr", // Estimated - verify actual distance
+          mapUrl: "https://www.google.com/maps/dir/Kozhikode+International+Airport/Wedding+Venue"
+        },
+        {
+          place: "Reception Venue",
+          distance: "120km, 3hr",
+          mapUrl: "https://www.google.com/maps/dir/Kozhikode+International+Airport/Reception+Venue"
+        }
+      ]
     },
     {
-      name: "Payyanur Railway Station (PAY)",
-      distance: "15km, 25min",
-      mapUrl: "https://www.google.com/maps/search/Payyanur+Railway+Station",
-      destination: "Wedding Venue"
+      name: "Pazhayangadi Railway Station",
+      destinations: [
+        {
+          place: "Wedding Venue",
+          distance: "2km, 5min",
+          mapUrl: "https://www.google.com/maps/dir/Pazhayangadi+Railway+Station/Wedding+Venue"
+        },
+        {
+          place: "Reception Venue",
+          distance: "24km, 40min", // Estimated - verify actual distance
+          mapUrl: "https://www.google.com/maps/dir/Pazhayangadi+Railway+Station/Wedding+Venue"
+        }
+      ]
     },
     {
       name: "Kannur Railway Station",
-      distance: "3.5km, 12min",
-      mapUrl: "https://www.google.com/maps/search/Kannur+Railway+Station",
-      destination: "Reception Venue"
+      destinations: [
+        {
+          place: "Wedding Venue",
+          distance: "23km, 30min",
+          mapUrl: "https://www.google.com/maps/dir/Kannur+Railway+Station/Wedding+Venue"
+        },
+        {
+          place: "Reception Venue",
+          distance: "3.5km, 12min",
+          mapUrl: "https://www.google.com/maps/dir/Kannur+Railway+Station/Reception+Venue"
+        }
+      ]
     }
   ];
 
+  // Function to choose the appropriate icon based on the transport name
+  const getTransportIcon = (name) => {
+    if (name.toLowerCase().includes("airport")) {
+      return <Flight style={{ color: themeColor, marginRight: "1px" }} />;
+    } else if (name.toLowerCase().includes("railway station")) {
+      return <Train style={{ color: themeColor, marginRight: "1px" }} />;
+    } else {
+      return <DirectionsBus style={{ color: themeColor, marginRight: "1px" }} />;
+    }
+  };
+
   return (
     <div
-      className="p-4 rounded-lg"
-      style={{ backgroundColor: `${themeColor}10`, borderLeft: `4px solid ${themeColor}` }}
+      className="p-2 rounded-lg"
+      style={{ backgroundColor: `${themeColor}10`, borderLeft: `5px solid ${themeColor}` }}
     >
-      <h3
-        className="text-sm md:text-xl font-bold mb-4"
-        style={{ color: themeColor }}
-      >
-        <IconText icon={DirectionsBus} text="Transportation" size="22px" />
+      <h3 className="text-md font-bold mb-5" style={{ color: themeColor }}>
+        <IconText icon={DirectionsBus} text="Transportation" size="20px" />
       </h3>
-
-      <div className="space-y-3 text-base">
-        {enhancedTransportData.map((item, index) => (
+      <div className="space-y-6 text-sm">
+        {enhancedTransportData.map((transport, index) => (
           <div
             key={index}
-            className="flex flex-col p-2 rounded-md transition-all duration-300 hover:bg-white hover:bg-opacity-50"
+            className="flex flex-col p-1 rounded-md transition-all duration-300 hover:bg-white hover:bg-opacity-50"
           >
-            <div className="flex items-center justify-between">
-              <a
-                href={item.mapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium hover:underline transition-all duration-300"
-                style={{ color: themeColor }}
-              >
-                {item.name}
-              </a>
-              <span className="text-sm font-semibold bg-gray-100 px-2 py-1 rounded-full">
-                {item.distance}
-              </span>
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center">
+                {getTransportIcon(transport.name)}
+                <span className="font-medium" style={{ color: themeColor }}>
+                  {transport.name}
+                </span>
+              </div>
             </div>
-            <span className="text-sm text-gray-600 ml-2 mt-1">
-              To: {item.destination}
-            </span>
+            <div className="space-y-1">
+              {transport.destinations.map((destination, destIndex) => (
+                <div
+                  key={destIndex}
+                  className="flex items-center justify-between pl-3 py-1 bg-gray-50 rounded"
+                >
+                  <a
+                    href={destination.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm hover:underline"
+                    style={{ color: themeColor }}
+                  >
+                    {destination.place}
+                  </a>
+                  <span className="text-sm font-medium bg-gray-100 px-1 py-0.5 rounded">
+                    {destination.distance}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -402,24 +464,20 @@ const AccommodationInfo = ({ themeColor }) => {
 
   return (
     <div
-      className="p-4 rounded-lg"
+      className="p-2 rounded-lg"
       style={{ backgroundColor: `${themeColor}10`, borderLeft: `4px solid ${themeColor}` }}
     >
-      <h3
-        className="text-sm md:text-xl font-bold mb-4"
-        style={{ color: themeColor }}
-      >
-        <IconText icon={Hotel} text="Accommodations" size="22px" />
+      <h3 className="text-md font-bold mb-3" style={{ color: themeColor }}>
+        <IconText icon={Hotel} text="Places to Stay" size="25px" />
       </h3>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-base">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
         {enhancedAccommodationData.map((item, index) => (
           <a
             key={index}
             href={item.mapUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 rounded-md transition-all duration-300 hover:shadow-lg flex flex-col"
+            className="p-2 rounded-md transition-all duration-300 hover:shadow-lg flex flex-col"
             style={{
               backgroundColor: `${themeColor}20`,
               borderBottom: `2px solid ${themeColor}`,
@@ -430,14 +488,13 @@ const AccommodationInfo = ({ themeColor }) => {
             <span className="font-medium" style={{ color: themeColor }}>
               {item.name}
             </span>
-            <span className="text-sm text-gray-600">{item.type}</span>
+            <span className="text-xs text-gray-600">{item.type}</span>
           </a>
         ))}
       </div>
     </div>
   );
 };
-
 
 // -------------------- RSVP Form Component (Glass Style) --------------------
 const RSVPForm = ({ themeColor = "#fedada" }) => {
@@ -524,7 +581,7 @@ const RSVPForm = ({ themeColor = "#fedada" }) => {
               <SubmitButton themeColor={themeColor} isSubmitting={isSubmitting} />
             </div>
             <div className="flex justify-end gap-x-2 pt-2">
-              <a href="https://wa.me/+919605100616" className="cursor-pointer">
+              <a href="https://wa.me/+919496130862" className="cursor-pointer">
                 <WhatsappIcon size={"24px"} fill={themeColor}/>
               </a>
               <a href="https://www.instagram.com/touchevento" className="cursor-pointer">
