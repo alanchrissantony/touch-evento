@@ -321,12 +321,12 @@ const TransportationInfo = ({ themeColor }) => {
         {
           place: "Wedding Venue",
           distance: "47km, 1hr", // Estimated - verify actual distance
-          mapUrl: "https://www.google.com/maps/dir/Kannur+International+Airport/Wedding+Venue"
+          mapUrl: "https://www.google.com/maps/dir/Kannur+International+Airport/Madayi+Cooperative+Rural+Bank+Auditorium"
         },
         {
           place: "Reception Venue",
           distance: "28km, 40min",
-          mapUrl: "https://www.google.com/maps/dir/Kannur+International+Airport/Reception+Venue"
+          mapUrl: "https://www.google.com/maps/dir/Kannur+International+Airport/Marmara+Beach+House"
         }
       ]
     },
@@ -336,12 +336,12 @@ const TransportationInfo = ({ themeColor }) => {
         {
           place: "Wedding Venue",
           distance: "140km, 4hr", // Estimated - verify actual distance
-          mapUrl: "https://www.google.com/maps/dir/Kozhikode+International+Airport/Wedding+Venue"
+          mapUrl: "https://www.google.com/maps/dir/Kozhikode+International+Airport/Madayi+Cooperative+Rural+Bank+Auditorium"
         },
         {
           place: "Reception Venue",
           distance: "120km, 3hr",
-          mapUrl: "https://www.google.com/maps/dir/Kozhikode+International+Airport/Reception+Venue"
+          mapUrl: "https://www.google.com/maps/dir/Kozhikode+International+Airport/Marmara+Beach+House"
         }
       ]
     },
@@ -351,12 +351,12 @@ const TransportationInfo = ({ themeColor }) => {
         {
           place: "Wedding Venue",
           distance: "2km, 5min",
-          mapUrl: "https://www.google.com/maps/dir/Pazhayangadi+Railway+Station/Wedding+Venue"
+          mapUrl: "https://www.google.com/maps/dir/Pazhayangadi+Railway+Station/Madayi+Cooperative+Rural+Bank+Auditorium"
         },
         {
           place: "Reception Venue",
           distance: "24km, 40min", // Estimated - verify actual distance
-          mapUrl: "https://www.google.com/maps/dir/Pazhayangadi+Railway+Station/Wedding+Venue"
+          mapUrl: "https://www.google.com/maps/dir/Pazhayangadi+Railway+Station/Marmara+Beach+House"
         }
       ]
     },
@@ -366,12 +366,12 @@ const TransportationInfo = ({ themeColor }) => {
         {
           place: "Wedding Venue",
           distance: "23km, 30min",
-          mapUrl: "https://www.google.com/maps/dir/Kannur+Railway+Station/Wedding+Venue"
+          mapUrl: "https://www.google.com/maps/dir/Kannur+Railway+Station/Madayi+Cooperative+Rural+Bank+Auditorium"
         },
         {
           place: "Reception Venue",
           distance: "3.5km, 12min",
-          mapUrl: "https://www.google.com/maps/dir/Kannur+Railway+Station/Reception+Venue"
+          mapUrl: "https://www.google.com/maps/dir/Kannur+Railway+Station/Marmara+Beach+House"
         }
       ]
     }
